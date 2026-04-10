@@ -1,55 +1,33 @@
-// ============================================================
-//  Base_de_Datos/conexionDB.cs
-//  Gestión de la conexión a SQLite y creación de la BD
-// ============================================================
+// Datos/ConexionDB.cs
 
 using System;
 using System.IO;
 using Microsoft.Data.Sqlite;
 
-namespace CajeroAutomatico.Base_de_Datos
+namespace CajeroAutomatico.Datos
 {
     public static class ConexionDB
     {
-        // Ruta al archivo de base de datos (en la raíz del proyecto)
-        private static readonly string _rutaBD = Path.Combine(
-            AppDomain.CurrentDomain.BaseDirectory, "cajero.db");
+        private static readonly string _rutaBD = "cajero.db";
 
-        // Cadena de conexión reutilizable
-        public static string CadenaConexion =>
-            $"Data Source={_rutaBD};";
+        public static string CadenaConexion => $"Data Source={_rutaBD};";
 
-        /// <summary>
-        /// Devuelve una conexión abierta lista para usar.
-        /// El llamador es responsable de cerrarla (using).
-        /// </summary>
+        // Devuelve una conexión abierta lista para usar
         public static SqliteConnection ObtenerConexion()
         {
             var conexion = new SqliteConnection(CadenaConexion);
             conexion.Open();
-
-            // Activar claves foráneas en cada conexión (SQLite lo requiere)
-            using var cmd = conexion.CreateCommand();
-            cmd.CommandText = "PRAGMA foreign_keys = ON;";
-            cmd.ExecuteNonQuery();
-
             return conexion;
         }
 
-        /// <summary>
-        /// Crea las tablas, índices y triggers si no existen,
-        /// ejecutando el script init.sql.
-        /// Llamar una sola vez al iniciar la aplicación.
-        /// </summary>
-        public static void InicializarBaseDeDatos()
+        // Crea las tablas leyendo el archivo init.sql
+        // Se llama una sola vez desde Program.cs
+        public static void InicializarBD()
         {
-            // Buscar init.sql relativo al ejecutable
-            string rutaScript = Path.Combine(
-                AppDomain.CurrentDomain.BaseDirectory, "Scripts", "init.sql");
+            string rutaScript = Path.Combine("Scripts", "init.sql");
 
             if (!File.Exists(rutaScript))
-                throw new FileNotFoundException(
-                    $"No se encontró el script de inicialización: {rutaScript}");
+                throw new FileNotFoundException($"No se encontró: {rutaScript}");
 
             string sql = File.ReadAllText(rutaScript);
 
@@ -57,24 +35,6 @@ namespace CajeroAutomatico.Base_de_Datos
             using var cmd = conexion.CreateCommand();
             cmd.CommandText = sql;
             cmd.ExecuteNonQuery();
-
-            Console.WriteLine("[DB] Base de datos inicializada correctamente.");
-        }
-
-        /// <summary>
-        /// Verifica que la conexión funcione correctamente.
-        /// </summary>
-        public static bool ProbarConexion()
-        {
-            try
-            {
-                using var conexion = ObtenerConexion();
-                return conexion.State == System.Data.ConnectionState.Open;
-            }
-            catch
-            {
-                return false;
-            }
         }
     }
 }
