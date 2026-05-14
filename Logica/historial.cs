@@ -27,8 +27,6 @@ namespace CajeroAutomatico.Logica
 
         // ══════════════════════════════════════════════════════
         //   MENÚ PRINCIPAL DEL HISTORIAL
-        //   El menú de tu compañero llama a este método
-        //   pasando el usuario ya autenticado.
         // ══════════════════════════════════════════════════════
         public void MostrarMenuHistorial(Usuario usuario)
         {
