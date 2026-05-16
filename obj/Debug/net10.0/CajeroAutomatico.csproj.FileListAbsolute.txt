@@ -77,3 +77,4 @@ C:\Users\Acer\Desktop\cajero-automatico\obj\Debug\net10.0\refint\CajeroAutomatic
 C:\Users\Acer\Desktop\cajero-automatico\obj\Debug\net10.0\CajeroAutomatico.pdb
 C:\Users\Acer\Desktop\cajero-automatico\obj\Debug\net10.0\CajeroAutomatico.genruntimeconfig.cache
 C:\Users\Acer\Desktop\cajero-automatico\obj\Debug\net10.0\ref\CajeroAutomatico.dll
+C:\Users\Roberto\Documents\GitHub\cajero-automatico\bin\Debug\net10.0\Scripts\init.sql

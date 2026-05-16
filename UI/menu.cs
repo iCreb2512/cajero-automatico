@@ -1,4 +1,3 @@
-
 //  UI/menu.cs
 //  Interfaz principal de consola del cajero automático.
 //  Conecta todos los módulos: Autenticacion, Operaciones,
